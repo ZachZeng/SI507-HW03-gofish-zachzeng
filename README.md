@@ -8,5 +8,5 @@
 ## Linou Dai
 - unique name: dailinou
 - github username: dailinou
-- section: 02, 03
+- section: 01, 03
 

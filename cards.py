@@ -193,7 +193,6 @@ if __name__ == "__main__":
 		print(result[0], "wins")
 	else:
 		print("TIE!")
-
 	deck = Deck()
 	deck.shuffle()
 	players = deck.deal(2, 7)
@@ -212,10 +211,6 @@ if __name__ == "__main__":
 		if !flag:
 			players[current_player].draw(deck)
 		current_player = current_player % 1
-
-
-
-
 
 ######### DO NOT CHANGE CODE ABOVE THIS LINE #########
 

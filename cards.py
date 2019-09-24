@@ -187,102 +187,112 @@ def play_war_game(testing=False):
 		return "Tie", p1_score, p2_score
 
 if __name__ == "__main__":
-	result = play_war_game()
-	print("""\n\n******\nTOTAL SCORES:\nPlayer 1: {}\nPlayer 2: {}\n\n""".format(result[1],result[2]))
-	if result[0] != "Tie":
-		print(result[0], "wins")
-	else:
-		print("TIE!")
 	deck = Deck()
 	deck.shuffle()
 	players = deck.deal(2, 7)
 	current_player = 0
+	# for hand in players:
+	# 	for card in hand.cards:
+	# 		print(card.__str__()) 
 	while True:
 		if len(deck.cards) == 0 | len(players[current_player].cards) == 0 | len(players[current_player % 1].cards == 0):
 			print("game over")
 			break
-		print(players[current_player].cards)
-		input_card_A = int(input("Please choose a card rank"))
+		for card in players[current_player].cards:
+			print(card.__str__()) 
+
+		input_card_A = int(input("Player " + str(current_player) + " Please choose a card rank\n"))
 		flag = False
-		for card in players[current_player % 1].cards:
+		valid = False
+		for card in players[current_player].cards:
 			if card.rank_num == input_card_A:
-				players[current_player % 1].remove_card(card)
-				flag = True
-		if !flag:
-			players[current_player].draw(deck)
-		current_player = current_player % 1
+				valid = True
 
-######### DO NOT CHANGE CODE ABOVE THIS LINE #########
-
-## You can write any additional debugging/trying stuff out code here...
-## OK to add debugging print statements, but do NOT change functionality of existing code.
-## Also OK to add comments!
-
-#########
-
-
-
-
-
-
-
-##**##**##**##@##**##**##**## # DO NOT CHANGE OR DELETE THIS COMMENT LINE -- we use it for grading your file
-###############################################
-
-### Write unit tests below this line for the cards code above.
-
-class TestDeck(unittest.TestCase):
-	def test_deal(self):
+		if valid:
+			for card in players[current_player ^ 1].cards:
+				if card.rank_num == input_card_A:
+					players[current_player ^ 1].remove_card(card)
+					flag = True
+			if flag:
+				print("Player "+ str(current_player ^ 1) +"Go Fish!\n")
+				players[current_player].draw(deck)
+			current_player = current_player ^ 1
+		else:
+			print("Please choose a card rank in your hand\n")
 		
-		#normal deal
-		deck = Deck()
-		deal_hands = deck.deal(5,6)
-		self.assertEqual(len(deck.cards),52-30)
-		self.assertEqual(len(deal_hands),5)
-		self.assertEqual(len(deal_hands[0].cards),6)
+		
 
-		#all deal divisiable
-		deck1 = Deck()
-		deal_hands1 = deck1.deal(2,-1)
-		self.assertEqual(len(deck1.cards),0)
-		self.assertEqual(len(deal_hands1[0].cards),26)
+# ######### DO NOT CHANGE CODE ABOVE THIS LINE #########
 
-		#all deal not divisiable
-		deck2 = Deck()
-		deal_hands2 = deck2.deal(3,-1)
-		self.assertEqual(len(deck2.cards),0)
-		self.assertEqual(len(deal_hands2[0].cards),18)
-		self.assertEqual(len(deal_hands2[1].cards),17)
+# ## You can write any additional debugging/trying stuff out code here...
+# ## OK to add debugging print statements, but do NOT change functionality of existing code.
+# ## Also OK to add comments!
 
-
-class TestHand(unittest.TestCase):
-
-	def test_remove_pair(self):
-		#initialize, including edging case like 4 cards with same rank, 3 cards with same rank, 2 cards with same rank
-		add_card = []
-		add_card.append(Card(0,2))
-		add_card.append(Card(1,1))
-		add_card.append(Card(3,10))
-		add_card.append(Card(1,2))
-		add_card.append(Card(2,9))
-		add_card.append(Card(2,4))
-		add_card.append(Card(1,9))
-		add_card.append(Card(0,9))
-		add_card.append(Card(3,9))
-		add_card.append(Card(1,8))
-		add_card.append(Card(0,8))
-		add_card.append(Card(3,8))
-		hand = Hand(add_card)
-
-		hand.remove_pairs()
-
-		self.assertEqual(len(hand.cards),4)
-		self.assertEqual(hand.cards[0].__str__(),"Ace of Clubs")
+# #########
 
 
 
-#############
-## The following is a line to run all of the tests you include:
-if __name__ == "__main__":
-	unittest.main(verbosity=2)
-## verbosity 2 to see detail about the tests the code fails/passes/etc.
+
+
+
+
+# ##**##**##**##@##**##**##**## # DO NOT CHANGE OR DELETE THIS COMMENT LINE -- we use it for grading your file
+# ###############################################
+
+# ### Write unit tests below this line for the cards code above.
+
+# class TestDeck(unittest.TestCase):
+# 	def test_deal(self):
+		
+# 		#normal deal
+# 		deck = Deck()
+# 		deal_hands = deck.deal(5,6)
+# 		self.assertEqual(len(deck.cards),52-30)
+# 		self.assertEqual(len(deal_hands),5)
+# 		self.assertEqual(len(deal_hands[0].cards),6)
+
+# 		#all deal divisiable
+# 		deck1 = Deck()
+# 		deal_hands1 = deck1.deal(2,-1)
+# 		self.assertEqual(len(deck1.cards),0)
+# 		self.assertEqual(len(deal_hands1[0].cards),26)
+
+# 		#all deal not divisiable
+# 		deck2 = Deck()
+# 		deal_hands2 = deck2.deal(3,-1)
+# 		self.assertEqual(len(deck2.cards),0)
+# 		self.assertEqual(len(deal_hands2[0].cards),18)
+# 		self.assertEqual(len(deal_hands2[1].cards),17)
+
+
+# class TestHand(unittest.TestCase):
+
+# 	def test_remove_pair(self):
+# 		#initialize, including edging case like 4 cards with same rank, 3 cards with same rank, 2 cards with same rank
+# 		add_card = []
+# 		add_card.append(Card(0,2))
+# 		add_card.append(Card(1,1))
+# 		add_card.append(Card(3,10))
+# 		add_card.append(Card(1,2))
+# 		add_card.append(Card(2,9))
+# 		add_card.append(Card(2,4))
+# 		add_card.append(Card(1,9))
+# 		add_card.append(Card(0,9))
+# 		add_card.append(Card(3,9))
+# 		add_card.append(Card(1,8))
+# 		add_card.append(Card(0,8))
+# 		add_card.append(Card(3,8))
+# 		hand = Hand(add_card)
+
+# 		hand.remove_pairs()
+
+# 		self.assertEqual(len(hand.cards),4)
+# 		self.assertEqual(hand.cards[0].__str__(),"Ace of Clubs")
+
+
+
+# #############
+# ## The following is a line to run all of the tests you include:
+# if __name__ == "__main__":
+# 	unittest.main(verbosity=2)
+# ## verbosity 2 to see detail about the tests the code fails/passes/etc.

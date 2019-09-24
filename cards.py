@@ -194,6 +194,28 @@ if __name__ == "__main__":
 	else:
 		print("TIE!")
 
+	deck = Deck()
+	deck.shuffle()
+	players = deck.deal(2, 7)
+	current_player = 0
+	while True:
+		if len(deck.cards) == 0 | len(players[current_player].cards) == 0 | len(players[current_player % 1].cards == 0):
+			print("game over")
+			break
+		print(players[current_player].cards)
+		input_card_A = int(input("Please choose a card rank"))
+		flag = False
+		for card in players[current_player % 1].cards:
+			if card.rank_num == input_card_A:
+				players[current_player % 1].remove_card(card)
+				flag = True
+		if !flag:
+			players[current_player].draw(deck)
+		current_player = current_player % 1
+
+
+
+
 
 ######### DO NOT CHANGE CODE ABOVE THIS LINE #########
 
